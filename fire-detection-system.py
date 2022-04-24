@@ -1,6 +1,6 @@
-from logging import exception
-from cv2 import blur
-from matplotlib.pyplot import hsv
+#from logging import exception
+#from cv2 import blur
+#from matplotlib.pyplot import hsv
 import cv2, numpy, playsound, smtplib
 
 fires_reported = 0
@@ -41,7 +41,7 @@ while True:
                 server.sendmail('system_email', recipientMail, "WARNING: A Fire incident has been reported at your site")
                 print ("Sent to", recipientMail)
                 server.close()
-            except exception as e:
+            except Exception as e:
                 print (e)
 
     if not ret:
