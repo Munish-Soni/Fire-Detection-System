@@ -1,0 +1,9 @@
+{
+    "recipientEmail" : "satyamsoni249@gmail.com",
+    "systemEmailAddress" : "firedetectorbot@gmail.com",
+    "systemEmailPassword" : "Firebot@123",
+    "mail" : {
+        "subject" : "!! FIRE WARNING !!",
+        "body" : "!!WARNING!! \n A Fire incident has been reported on your site"
+    }
+}
