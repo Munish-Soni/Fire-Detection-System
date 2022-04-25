@@ -1,18 +1,12 @@
 #from logging import exception
 #from cv2 import blur
 #from matplotlib.pyplot import hsv
-import cv2, numpy, playsound, smtplib, json
-
-with open("mail_settings.json", 'r') as mail_settings_file:
-    mail_settings = json.load (mail_settings_file)
-
-with open("system_settings.json", 'r') as system_settings_file:
-    system_settings_file = json.load (system_settings_file)
+import cv2, numpy, playsound, smtplib
 
 fires_reported = 0
 alarm_status = False
 
-video = cv2.VideoCapture(system_settings_file["flame_video"])
+video = cv2.VideoCapture("flame.mp4")
 
 while True:
 
@@ -34,16 +28,18 @@ while True:
         fires_reported += 1
 
         if (fires_reported >= 1) and not alarm_status:
-            playsound.playsound(system_settings_file["alarm_audio"])
+            playsound.playsound("alarm-sound.mp3")
             alarm_status = True
+
+            recipientMail = lower("Fire_Engine_Mail_Address")
 
             try:
                 server = smtplib.SMTP('smtp.gmail.com', 587)
                 server.ehlo()
                 server.starttls()
-                server.login(mail_settings["systemEmailAddress"], mail_settings["systemEmailPassword"])
-                server.sendmail(mail_settings["mail"]["subject"], mail_settings["recipientMail"], mail_settings["mail"]["body"])
-                print ("Sent to", mail_settings["recipientMail"])
+                server.login("system_email", "password")
+                server.sendmail('system_email', recipientMail, "WARNING: A Fire incident has been reported at your site")
+                print ("Sent to", recipientMail)
                 server.close()
             except Exception as e:
                 print (e)
